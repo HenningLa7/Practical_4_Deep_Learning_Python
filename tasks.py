@@ -61,15 +61,10 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    return [
-        "".join(
-            character
-            for character in word.lower()
-            if character.isalnum()
-        )
-        for word in string.split()
-        if any(character.isalnum() for character in word)
-    ]
+    allowed = set("abcdefghijklmnopqrstuvwxyz0123456789")
+    return "".join(
+        c for c in string.lower() if c in allowed or c in "\n\t "
+    ).split()
 
 # Tests
 text1 = "The quick brown fox jumps over the lazy dog!"
@@ -90,7 +85,6 @@ tokenize(text2)
 # This is called calculating the frequency of tokens, and it’s useful because words that appear 
 # frequently might have different importance compared to rare words. In this exercise, you’ll 
 # create a dictionary where each word is a key and its frequency (count) is the value.
-
 
 
 # Task 3: Using the tokens list from the previous exercise, create a dictionary comprehension 
@@ -126,8 +120,6 @@ def token_counts(string: str, k: int = 1) -> dict:
 text_hist = {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
 all(text_hist[key] == value for key, value in token_counts(text).items())
 # -----------------------------------------------
-
-
 
 
 # [C] Sets & Dictionary comprehension: Mapping unique tokens to numbers and vice versa
