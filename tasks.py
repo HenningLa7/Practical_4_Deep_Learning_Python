@@ -73,7 +73,7 @@ def tokenize(string: str) -> list:
 
 # Tests
 text1 = "The quick brown fox jumps over the lazy dog!"
-text2 = "Hii! Ist there anyone? I dont think so."
+text2 = "Hii! Is there anyone? I dont think so."
 tokenize(text1)
 tokenize(text2)
 # -----------------------------------------------
