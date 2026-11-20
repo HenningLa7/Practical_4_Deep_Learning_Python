@@ -4,19 +4,6 @@
 # Libraries
 import numpy as np
 
-# Some own example code
-def ev_snd (lis):
-    [print(lis[i]) for i in range(len(lis)) if lis[i] % 2 == 0]
-
-def ev_snd2 (lis):
-    for i in range(len(lis)):
-        if lis[i] % 2 == 0:
-            print(lis[i])
-
-a = range(1, 11)
-print(ev_snd(a))
-print(ev_snd2(a))
-
 
 # Follow the tasks below to practice basic Python concepts.
 # Write your code in between the dashed lines.
@@ -114,7 +101,7 @@ print(word_frequencies)
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
     tokens = tokenize(string)
-    return {token: tokens.count(token) for token in set(tokens) if tokens.count(token) > k}
+    return {token: tokens.count(token) for token in set(tokens) if tokens.count(token) >= k}
 
 # test:
 text_hist = {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
