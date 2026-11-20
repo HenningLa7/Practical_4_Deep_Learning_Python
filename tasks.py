@@ -1,4 +1,22 @@
+## Practical 4 - Deep Learning with Python
+# ____________________________________________________________________________________________
+
+# Libraries
 import numpy as np
+
+# Some own example code
+def ev_snd (lis):
+    [print(lis[i]) for i in range(len(lis)) if lis[i] % 2 == 0]
+
+def ev_snd2 (lis):
+    for i in range(len(lis)):
+        if lis[i] % 2 == 0:
+            print(lis[i])
+
+a = range(1, 11)
+print(ev_snd(a))
+print(ev_snd2(a))
+
 
 # Follow the tasks below to practice basic Python concepts.
 # Write your code in between the dashed lines.
@@ -14,10 +32,11 @@ import numpy as np
 # Syntax: [expression for item in iterable if condition] (condition is optional).
 # Example: squares = [x**2 for x in range(10) if x % 2 == 0]
 
-# Large language models work with "tokens," which are the basic units of text (often words or subwords). 
-# Tokenization is the process of breaking down sentences into these tokens. In this exercise, you’ll 
-# create a simple tokenizer to split a sentence into words and remove punctuation.
 
+# Large language models work with "tokens," which are the basic units of text (often words or subwords). 
+# Token
+# ization is the process of breaking down sentences into these tokens. In this exercise, you’ll 
+# create a simple tokenizer to split a sentence into words and remove punctuation.
 
 
 # Task 1: Given a paragraph of text, implement a simple "tokenizer" that splits the paragraph 
@@ -29,14 +48,12 @@ import numpy as np
 text = "The quick brown fox jumps over the lazy dog!"
 
 # Write a list comprehension to tokenize the text and remove punctuation
-tokens = _ # Your code here
+tokens = text.replace("!", "").replace("?", "").replace(",", "").replace(".", "").split()
+tokens = [word.replace("!", "") for word in text.split()]
 
 # Expected output: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
 print(tokens)
 # -----------------------------------------------
-
-
-
 
 # Task 2: Create a function that takes a string and breaks it up into tokens and removes any 
 #   punctuation, and then converts each token to lowercase. The function should returns unique 
@@ -45,7 +62,10 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    pass # Your code
+    replaced = [string.replace("!", "").replace("?", "").replace(",", "").replace(".", "").replace(";", "")]
+    tokens = replaced.split()
+    lowerc = tokens.lower()
+    return lower
 
 
 # -----------------------------------------------
