@@ -101,14 +101,16 @@ tokenize(text2)
 
 # Your code here:
 # -----------------------------------------------
-word_frequencies = _ # Your code here
+word_frequencies = {token: tokens.count(token) for token in set(tokens)}
 
 # Expected output example: {'the': 2, 'quick': 1, ...}
 print(word_frequencies)
 
 # Modify the comprehension to include only words that appear more than once.
 # -----------------------------------------------
+word_frequencies = {token: count for token, count in word_frequencies.items() if count > 1}
 
+print(word_frequencies)
 
 
 # Task 4: Define a function that takes a string and an integer k, and returns a dictionary with
@@ -117,7 +119,8 @@ print(word_frequencies)
 # Your code here:
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
-    pass # Your code
+    tokens = tokenize(string)
+    return {token: tokens.count(token) for token in set(tokens) if tokens.count(token) > k}
 
 # test:
 text_hist = {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
@@ -148,10 +151,12 @@ all(text_hist[key] == value for key, value in token_counts(text).items())
 
 # Your code here:
 # -----------------------------------------------
-token_to_id = _ # Your code here
+token_to_id = {token: idx for idx, token in enumerate(sorted(set(tokens)))}
+id_to_token = {idx: token for token, idx in token_to_id.items()}
 
 # Expected output: {'dog': 0, 'quick': 1, 'fox': 2, 'the': 3, 'over': 4, 'lazy': 5, 'brown': 6, 'jumps': 7}
 print(token_to_id)
+print(id_to_token)
 # -----------------------------------------------
 
 
@@ -160,7 +165,7 @@ print(token_to_id)
 #
 # Your code here:
 # -----------------------------------------------
-id_to_token = _ # Your code here
+id_to_token = {idx: token for token, idx in token_to_id.items()}
 
 # tests: 
 # test 1
@@ -181,14 +186,15 @@ assert all(id_to_token[token_to_id[key]]==key for key in token_to_id) and all(to
 # Your code here:
 # -----------------------------------------------
 def make_vocabulary_map(documents: list) -> tuple:
-    # Hint: use your tokenize function
-    pass # Your code
+    all_tokens = set(token for doc in documents for token in tokenize(doc))
+    token_to_id = {token: idx for idx, token in enumerate(sorted(all_tokens))}
+    id_to_token = {idx: token for token, idx in token_to_id.items()}
+    return token_to_id, id_to_token
 
 # Test
 t2i, i2t = make_vocabulary_map([text])
 all(i2t[t2i[tok]] == tok for tok in t2i) # should be True
 # -----------------------------------------------
-
 
 
 # Task 8: Define a function that will take in a list of strings ('documents') and a vocabulary
@@ -202,7 +208,9 @@ all(i2t[t2i[tok]] == tok for tok in t2i) # should be True
 # -----------------------------------------------
 def tokenize_and_encode(documents: list) -> list:
     # Hint: use your make_vocabulary_map and tokenize function
-    pass # Your code
+    token_to_id, id_to_token = make_vocabulary_map(documents)
+    encoded_documents = [[token_to_id[token] for token in tokenize(doc)] for doc in documents]
+    return encoded_documents, token_to_id, id_to_token
 
 # Test:
 enc, t2i, i2t = tokenize_and_encode([text, 'What a luck we had today!'])
@@ -210,10 +218,8 @@ enc, t2i, i2t = tokenize_and_encode([text, 'What a luck we had today!'])
 # -----------------------------------------------
 
 
-
 # In the following set of exercises you're going to implement an RNN from scratch. You'll also
 # fit it to an existing time series.
-
 
 # [D] Using a lambda expression to define functions: One line definition of a function
 # Objective: practicing to work with lambda functions
@@ -222,13 +228,12 @@ enc, t2i, i2t = tokenize_and_encode([text, 'What a luck we had today!'])
 # the nodes. We need to implement this function first.
 
 
-
 # Task 9: use a lambda function to implement the logistic function using the np.exp
 #   function to work elementwise with numpy arrays
 
 # Your code here:
 # -----------------------------------------------
-sigmoid = _ # Your code
+sigmoid = lambda x: 1 / (1 + np.exp(-x))
 
 # Test:
 np.all(sigmoid(np.log([1, 1/3, 1/7])) == np.array([1/2, 1/4, 1/8]))
@@ -337,7 +342,7 @@ o.shape == (100,) and o.mean().round(3) == 16.287 and o.std().astype(int) == 133
 
 # Your code here:
 # -----------------------------------------------
-def rnn_loss(w: np.array, w, list_of_sequences: list[np.array], y: np.array) -> np.float64:
+def rnn_loss(w: np.array, list_of_sequences: list[np.array], y: np.array) -> np.float64:
     pass # Your code
 
 # Test:
