@@ -48,8 +48,7 @@ print(ev_snd2(a))
 text = "The quick brown fox jumps over the lazy dog!"
 
 # Write a list comprehension to tokenize the text and remove punctuation
-tokens = text.replace("!", "").replace("?", "").replace(",", "").replace(".", "").split()
-tokens = [word.replace("!", "") for word in text.split()]
+tokens = [word.replace("!", "").replace(".", "").replace(",", "").replace("?", "").replace(";", "") for word in text.split()]
 
 # Expected output: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
 print(tokens)
@@ -62,14 +61,22 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    replaced = [string.replace("!", "").replace("?", "").replace(",", "").replace(".", "").replace(";", "")]
-    tokens = replaced.split()
-    lowerc = tokens.lower()
-    return lower
+    return [
+        "".join(
+            character
+            for character in word.lower()
+            if character.isalnum()
+        )
+        for word in string.split()
+        if any(character.isalnum() for character in word)
+    ]
 
-
+# Tests
+text1 = "The quick brown fox jumps over the lazy dog!"
+text2 = "Hii! Ist there anyone? I dont think so."
+tokenize(text1)
+tokenize(text2)
 # -----------------------------------------------
-
 
 
 # [B] Dictionary Comprehensions: Frequency Count of Tokens
