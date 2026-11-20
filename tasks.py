@@ -48,9 +48,10 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    allowed = set("abcdefghijklmnopqrstuvwxyz0123456789 \n\t")
-    cleaned = "".join(c for c in string.lower() if c in allowed)
-    return sorted(set(cleaned.split()))
+    allowed = set("abcdefghijklmnopqrstuvwxyz0123456789")
+    return "".join(
+        c for c in string.lower() if c in allowed or c in "\n\t "
+    ).split()
 
 # -----------------------------------------------
 
